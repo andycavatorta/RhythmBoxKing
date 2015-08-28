@@ -11,7 +11,7 @@ run test of i/o comms w/ Mojo
 
 import time
 import threading
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 """
 Duplex Ports class handles communication with Mojo FPGA
@@ -34,6 +34,11 @@ inport = False
 def init(mm_d, rc_f):
     global moduleMap_d
     global recvCallback_f
+    GPIO.setmode(GPIO.BOARD)
+    for pin in PINS_OUT:
+        GPIO.setup(pin,GPIO.OUT)
+    for pin in PINS_In:
+        GPIO.setup(pin,GPIO.IN,pull_up_down=GPIO.PUD_DOWN)
     moduleMap_d = mm_d
     recvCallback_f = rc_f
     inport = InPort()
@@ -58,6 +63,7 @@ class InPort(threading.Thread):
         pass
 
 def send(module, value):
+    # to do : evaluate using bitwise operations to make this faster?
     if moduleMap_d == False:
         print "You must run init() before using this module"
         return False
@@ -68,12 +74,17 @@ def send(module, value):
     word2_str = "1" + value_bin_str[5:16]
     #print word1_str, word2_str
     for i in range(12):
-        print int(word1_str[11-i]), PINS_OUT[11-i]
+        pin = PINS_OUT[11-i]
+        val = int(word1_str[11-i])
+        print pin, val
+        GPIO.output(pin,val)
     
     for i in range(12):
-        print int(word2_str[11-i]), PINS_OUT[11-i]
-
-
+        pin = PINS_OUT[11-i]
+        val = int(word2_str[11-i])
+        print pin, val
+        GPIO.output(pin,val)
+        #print int(word2_str[11-i]), PINS_OUT[11-i]
 
 def dec2bin(n, fill):
   bStr = ''
