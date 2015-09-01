@@ -100,7 +100,7 @@ def send(module, value):
         GPIO.output(pin,val)
         #print int(word2_str[11-i]), PINS_OUT[11-i]
     #print module_bin_str, value_bin_str
-    print word1_str, word2_str
+    #print word1_str, word2_str
     #print
     time.sleep(.001)
 
