@@ -60,13 +60,18 @@ class InPort(threading.Thread):
         threading.Thread.__init__(self)
         self.queue = []
     def run(self):
+        last = 0
         while True:
-            GPIO.wait_for_edge(3, GPIO.RISING)
-            print "rising"
-            print read()
-            GPIO.wait_for_edge(3, GPIO.FALLING)
-            print read()
-            print "falling"
+            v = GPIO.input(3)
+            if v != last:
+                print v
+                last = v
+            #GPIO.wait_for_edge(3, GPIO.RISING)
+            #print "rising"
+            #print read()
+            #GPIO.wait_for_edge(3, GPIO.FALLING)
+            #print read()
+            #print "falling"
         pass
 
 def read():
