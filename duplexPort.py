@@ -66,12 +66,20 @@ class InPort(threading.Thread):
             pass
 
 def read():
-    pinValues = [0,0,0,0,0,0,0,0,0,0,0,0]
-    for i in range(12):
-        pin = PINS_IN[i]
-        pinValue = GPIO.input(pin)
-        pinValues[i]=pinValue
-    return pinValues
+    return[
+        GPIO.input(PINS_IN[0]),
+        GPIO.input(PINS_IN[1]),
+        GPIO.input(PINS_IN[2]),
+        GPIO.input(PINS_IN[3]),
+        GPIO.input(PINS_IN[4]),
+        GPIO.input(PINS_IN[5]),
+        GPIO.input(PINS_IN[6]),
+        GPIO.input(PINS_IN[7]),
+        GPIO.input(PINS_IN[8]),
+        GPIO.input(PINS_IN[9]),
+        GPIO.input(PINS_IN[10]),
+        GPIO.input(PINS_IN[11]),
+    ]
 
 def send(module, value):
     # to do : evaluate using bitwise operations to make this faster?
