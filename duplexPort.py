@@ -12,6 +12,7 @@ run test of i/o comms w/ Mojo
 import time
 import threading
 import RPi.GPIO as GPIO
+import RPIO
 
 """
 Duplex Ports class handles communication with Mojo FPGA
@@ -70,7 +71,7 @@ def read():
         pinValues.append(str(pinValue))
     return pinValues
 
-RPIO.add_interrupt_callback(3, read, edge='both', threaded_callback=True)
+RPIO.add_interrupt_callback(2, read, edge='both', threaded_callback=True)
 
 def send(module, value):
     # to do : evaluate using bitwise operations to make this faster?
