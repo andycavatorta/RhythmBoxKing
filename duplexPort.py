@@ -60,22 +60,17 @@ class InPort(threading.Thread):
         threading.Thread.__init__(self)
         self.queue = []
     def run(self):
-        last = 0
+        last_l = []
         while True:
-            GPIO.wait_for_edge(3, GPIO.RISING)
-            print "rising"
-            #print read()
-            GPIO.wait_for_edge(3, GPIO.FALLING)
-            #print read()
-            print "falling"
-        pass
+
+            pass
 
 def read():
-    pinValues = []
+    pinValues = [0,0,0,0,0,0,0,0,0,0,0,0]
     for i in range(12):
         pin = PINS_IN[i]
         pinValue = GPIO.input(pin)
-        pinValues.append(str(pinValue))
+        pinValues[i]=pinValue
     return pinValues
 
 def send(module, value):
