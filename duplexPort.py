@@ -70,6 +70,8 @@ def read():
         pinValues.append(str(pinValue))
     return pinValues
 
+RPIO.add_interrupt_callback(3, read, edge='both', threaded_callback=True)
+
 def send(module, value):
     # to do : evaluate using bitwise operations to make this faster?
     if moduleMap_d == False:
