@@ -43,7 +43,7 @@ def init(mm_d, rc_f):
     moduleMap_d = mm_d
     recvCallback_f = rc_f
     inport = InPort()
-    #inport.start()
+    inport.start()
     #outport = OutPort()
     #outport.start()
 
@@ -61,6 +61,11 @@ class InPort(threading.Thread):
         threading.Thread.__init__(self)
         self.queue = []
     def run(self):
+        while True:
+            GPIO.wait_for_edge(3, GPIO.RISING)
+            print "rising"
+            GPIO.wait_for_edge(3, GPIO.FALLING)
+            print "falling"
         pass
 
 def read():
@@ -70,8 +75,6 @@ def read():
         pinValue = GPIO.input(pin)
         pinValues.append(str(pinValue))
     return pinValues
-
-RPIO.add_interrupt_callback(2, read, edge='both', threaded_callback=True)
 
 def send(module, value):
     # to do : evaluate using bitwise operations to make this faster?
