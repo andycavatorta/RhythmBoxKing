@@ -100,6 +100,7 @@ def send(module, value):
         #print pin, val
         GPIO.output(pin,val)
 
+    time.sleep(.1)
     p = read()
     print str(p)
     time.sleep(.1)
@@ -109,6 +110,7 @@ def send(module, value):
         #print pin, val
         GPIO.output(pin,val)
         #print int(word2_str[11-i]), PINS_OUT[11-i]
+    time.sleep(.1)
     p = read()
     print str(p)
     #print module_bin_str, value_bin_str
