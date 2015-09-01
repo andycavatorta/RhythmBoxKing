@@ -63,7 +63,9 @@ class InPort(threading.Thread):
         while True:
             GPIO.wait_for_edge(3, GPIO.RISING)
             print "rising"
+            print read()
             GPIO.wait_for_edge(3, GPIO.FALLING)
+            print read()
             print "falling"
         pass
 
@@ -97,9 +99,9 @@ def send(module, value):
         #print pin, val
         GPIO.output(pin,val)
         #print int(word2_str[11-i]), PINS_OUT[11-i]
-    print module_bin_str, value_bin_str
+    #print module_bin_str, value_bin_str
     print word1_str, word2_str
-    print
+    #print
     time.sleep(.001)
 
 def dec2bin(n, fill):
@@ -117,8 +119,8 @@ def testHarness():
     init(moduleMap, testCallback)
     for i in range(65534):
         send(0,i)
-        p = read()
-        print str(p)
+        #p = read()
+        #print str(p)
         time.sleep(.1) 
     send(0,0)
 
