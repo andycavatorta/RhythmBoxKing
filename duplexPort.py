@@ -62,6 +62,14 @@ class InPort(threading.Thread):
     def run(self):
         pass
 
+def read():
+    pinValues = []
+    for i in range(12):
+        pin = PINS_IN[i]
+        pinValue = GPIO.input(pin)
+        pinValues.append(str(pinValue))
+    return pinValues
+
 def send(module, value):
     # to do : evaluate using bitwise operations to make this faster?
     if moduleMap_d == False:
@@ -70,21 +78,24 @@ def send(module, value):
     # make with the bit stuffing
     module_bin_str = dec2bin(module, 6)
     value_bin_str = dec2bin(value, 16)
-    word1_str = "0" + module_bin_str + value_bin_str[0:5]
-    word2_str = "1" + value_bin_str[5:16]
+    word1_str = value_bin_str[11:16] + module_bin_str + "0"
+    word2_str = value_bin_str[0:11] + "1"
     for i in range(12):
         pin = PINS_OUT[i]
         val = int(word1_str[i])
         #print pin, val
         GPIO.output(pin,val)
+    time.sleep(.001)
     for i in range(12):
         pin = PINS_OUT[i]
         val = int(word2_str[i])
         #print pin, val
         GPIO.output(pin,val)
         #print int(word2_str[11-i]), PINS_OUT[11-i]
-    print value_bin_str
-    time.sleep(.5)
+    print module_bin_str, value_bin_str
+    print word1_str, word2_str
+    print
+    time.sleep(.001)
 
 def dec2bin(n, fill):
   bStr = ''
@@ -99,35 +110,11 @@ def testCallback(msg_l):
 def testHarness():
     moduleMap = {"echo", 0}
     init(moduleMap, testCallback)
-    #for i in range(8):
-    #    send(0,i^2)
-    #    time.sleep(1)
+    for i in range(65534):
+        send(0,i)
+        p = read()
+        print str(p)
+        time.sleep(.1) 
     send(0,0)
-    time.sleep(1)
-    send(0,1)
-    time.sleep(1)
 
-    send(0,2)
-    time.sleep(1)
-
-    send(0,4)
-    time.sleep(1)
-
-    send(0,8)
-    time.sleep(1)
-
-    send(0,16)
-    time.sleep(1)
-
-    send(0,32)
-    time.sleep(1)
-
-    send(0,64)
-    time.sleep(1)
-
-    send(0,128)
-    time.sleep(1)
-
-    send(0,256)
-    time.sleep(1)
 testHarness()
