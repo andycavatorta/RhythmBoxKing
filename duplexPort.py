@@ -42,7 +42,7 @@ def init(mm_d, rc_f):
     moduleMap_d = mm_d
     recvCallback_f = rc_f
     inport = InPort()
-    #inport.start()
+    inport.start()
     #outport = OutPort()
     #outport.start()
 
@@ -62,8 +62,10 @@ class InPort(threading.Thread):
     def run(self):
         last_l = []
         while True:
-
-            pass
+            v = read()
+            if v != last_l:
+                print v
+                last_l = v
 
 def read():
     return[
@@ -123,8 +125,8 @@ def testHarness():
     init(moduleMap, testCallback)
     for i in range(65534):
         send(0,i)
-        p = read()
-        print str(p)
+        #p = read()
+        #print str(p)
         time.sleep(.1) 
     send(0,0)
 
