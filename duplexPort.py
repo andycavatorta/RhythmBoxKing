@@ -66,7 +66,7 @@ class InPort(threading.Thread):
             if v != last_l:
                 print v
                 last_l = v
-            time.sleep(.001)
+            #time.sleep(.001)
 
 def read():
     return[
@@ -99,7 +99,7 @@ def send(module, value):
         val = int(word1_str[i])
         #print pin, val
         GPIO.output(pin,val)
-    time.sleep(.01)
+    time.sleep(.1)
     for i in range(12):
         pin = PINS_OUT[i]
         val = int(word2_str[i])
@@ -109,7 +109,7 @@ def send(module, value):
     print module_bin_str, value_bin_str
     print word1_str, word2_str
     print
-    time.sleep(.01)
+    time.sleep(.1)
 
 def dec2bin(n, fill):
   bStr = ''
@@ -128,7 +128,7 @@ def testHarness():
         send(0,i)
         #p = read()
         #print str(p)
-        time.sleep(.1) 
+        #time.sleep(.1) 
     send(0,0)
 
 testHarness()
