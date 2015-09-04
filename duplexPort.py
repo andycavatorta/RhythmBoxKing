@@ -100,9 +100,9 @@ def send(module, value):
         #print pin, val
         GPIO.output(pin,val)
 
-    time.sleep(.1)
+    #time.sleep(.1)
     p = read()
-    print str(p)
+    #print str(p)
     time.sleep(.1)
     for i in range(12):
         pin = PINS_OUT[i]
@@ -110,13 +110,13 @@ def send(module, value):
         #print pin, val
         GPIO.output(pin,val)
         #print int(word2_str[11-i]), PINS_OUT[11-i]
-    time.sleep(.1)
-    p = read()
-    print str(p)
+    #time.sleep(.1)
+    #p = read()
+    #print str(p)
     #print module_bin_str, value_bin_str
     #print word1_str, word2_str
     #print
-    time.sleep(.1)
+    #time.sleep(.1)
 
 def dec2bin(n, fill):
   bStr = ''
@@ -131,11 +131,13 @@ def testCallback(msg_l):
 def testHarness():
     moduleMap = {"echo", 0}
     init(moduleMap, testCallback)
-    for i in range(65534):
-        send(0,i)
+    send(10,16000)
+    send(10,16000)
+    #for i in range(65534):
+        #send(10,i)
         #p = read()
         #print str(p)
         #time.sleep(.1) 
-    send(0,0)
+    #send(0,0)
 
 testHarness()
