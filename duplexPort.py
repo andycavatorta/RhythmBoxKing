@@ -26,20 +26,20 @@ send(moduleName,Value) places name/value pairs in the send queue
 TIMING = 0.1
 PINS_IN = [3,5,7,29,31,26,24,21,19,23,32,33]
 PINS_OUT = [8,10,36,11,12,35,38,40,15,16,18,22]
-moduleMap_d = False
+#moduleMap_d = False
 recvCallback = False
 inport = False
 #outport = False
 
-def init(mm_d, rc_f):
-    global moduleMap_d
+def init(rc_f):
+    #global moduleMap_d
     global recvCallback_f
     GPIO.setmode(GPIO.BOARD)
     for pin in PINS_OUT:
         GPIO.setup(pin,GPIO.OUT)
     for pin in PINS_IN:
         GPIO.setup(pin,GPIO.IN,pull_up_down=GPIO.PUD_DOWN)
-    moduleMap_d = mm_d
+    #moduleMap_d = mm_d
     recvCallback_f = rc_f
     inport = InPort()
     #inport.start()
@@ -86,9 +86,9 @@ def read():
 
 def send(module, value):
     # to do : evaluate using bitwise operations to make this faster?
-    if moduleMap_d == False:
-        print "You must run init() before using this module"
-        return False
+    #if moduleMap_d == False:
+    #    print "You must run init() before using this module"
+    #    return False
     # make with the bit stuffing
     module_bin_str = dec2bin(module, 6)
     value_bin_str = dec2bin(value, 16)
@@ -125,12 +125,12 @@ def dec2bin(n, fill):
     n = n >> 1
   return bStr.zfill(fill)
 
+"""
 def testCallback(msg_l):
     print "testCallback:", msg_l
 
 def testHarness():
-    moduleMap = {"echo", 0}
-    init(moduleMap, testCallback)
+    init(testCallback)
     send(10,16000)
     send(10,16000)
     #for i in range(65534):
@@ -141,3 +141,4 @@ def testHarness():
     #send(0,0)
 
 testHarness()
+"""
