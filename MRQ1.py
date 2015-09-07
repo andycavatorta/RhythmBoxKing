@@ -1,21 +1,22 @@
 volume = 0 # range 0-127
-externalClock0 = 0 # range 1-127
-externalClock1 = 0 # range 1-127
-externalClock2 = 0 # range 1-127
+clock0 = 0 # range 1-127
+clock1 = 0 # range 1-127
+clock2 = 0 # range 1-127
+externalClock = 0 # range 0-1
 power = 0 # range 0-1
 
 def setClockOscillator(msg,modifier):
-	global externalClock0, externalClock1, externalClock2
+	global clock0, clock1, clock2
 	fpgaModuleId = 10
 	if modifier == 0: # coarse
 		v = msg.value / 4
-		externalClock0 = v << 11
+		clock0 = v << 11
 	if modifier == 1: # middle 
 		v = msg.value / 4
-		externalClock1 = v << 6
+		clock1 = v << 6
 	if modifier == 2: # fine
-		externalClock2 = msg.value / 2
-	fpgaValue = externalClock0 + externalClock1 + externalClock2
+		clock2 = msg.value / 2
+	fpgaValue = clock0 + clock1 + clock2
 	print fpgaValue
 	return [fpgaModuleId,fpgaValue]
 
