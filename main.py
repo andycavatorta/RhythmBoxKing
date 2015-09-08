@@ -4,7 +4,7 @@ import threading
 import mido
 import sys
 import MRQ1
-import duplexPort
+#import duplexPort
 
 # globals
 MIDI_PORT = False
@@ -34,7 +34,7 @@ MIDI_CC_mapping[93] = [MRQ1.setVolume,3]
 MIDI_CC_mapping[73] = [MRQ1.setBalance,4]
 
 # init simurgh
-
+"""
 # init duplex port
 def TestCallback():
 	while True:
@@ -44,6 +44,7 @@ testcallback = threading.Thread(target=TestCallback)
 testcallback.start()
 
 duplexPort.init(testcallback)
+"""
 
 # init MIDI
 def mido_init():
@@ -66,15 +67,17 @@ def mapMIDI(msg):
 	if msg.type == "note_on":
 		mapping_l = MIDI_note_mapping[msg.note]	
 		if mapping_l:
-			fpgaParams = mapping_l[0](msg, mapping_l[1])
-			print "fpgaParams",fpgaParams
-			duplexPort.send(fpgaParams[0],fpgaParams[1])
+			mapping_l[0](msg, mapping_l[1])
+			#fpgaParams = mapping_l[0](msg, mapping_l[1])
+			#print "fpgaParams",fpgaParams
+			#duplexPort.send(fpgaParams[0],fpgaParams[1])
 	if msg.type == "control_change":
 		mapping_l = MIDI_CC_mapping[msg.control]
 		if mapping_l:
-			fpgaParams = mapping_l[0](msg, mapping_l[1])
-			print "fpgaParams",fpgaParams
-			duplexPort.send(fpgaParams[0],fpgaParams[1])
+			mapping_l[0](msg, mapping_l[1])
+			#fpgaParams = mapping_l[0](msg, mapping_l[1])
+			#print "fpgaParams",fpgaParams
+			#duplexPort.send(fpgaParams[0],fpgaParams[1])
 
 # signal functions
 mido_init()

@@ -1,3 +1,16 @@
+import duplexPort
+
+# init duplex port
+def TestCallback():
+	while True:
+		time.sleep(1)
+#duplexPort.init(testcallback)
+testcallback = threading.Thread(target=TestCallback)
+testcallback.start()
+
+duplexPort.init(testcallback)
+
+
 volume = 0 # range 0-127
 clock0 = 0 # range 1-127
 clock1 = 0 # range 1-127
@@ -19,44 +32,52 @@ def setClockOscillator(msg,modifier):
 	fpgaValue = int((clock0 + clock1 + clock2)/2)
 	#print fpgaValue
 	fpgaValue = fpgaValue if fpgaValue > 0 else fpgaValue +1
-	return [fpgaModuleId,fpgaValue]
+	#return [fpgaModuleId,fpgaValue]
+	duplexPort.send(fpgaModuleId,fpgaValue)
 
 def triggerSnare(msg,modifier):
 	fpgaModuleId = 20
 	fpgaValue = 0 #msg.velocity * 255
-	return [fpgaModuleId,fpgaValue]
+	#return [fpgaModuleId,fpgaValue]
+	duplexPort.send(fpgaModuleId,fpgaValue)
 
 def triggerBongo(msg,modifier):
 	fpgaModuleId = 21
 	fpgaValue = 0 #msg.velocity * 255
-	return [fpgaModuleId,fpgaValue]
+	#return [fpgaModuleId,fpgaValue]
+	duplexPort.send(fpgaModuleId,fpgaValue)
 
 def triggerBlock(msg,modifier):
 	fpgaModuleId = 22
 	fpgaValue = 0 #msg.velocity * 255
-	return [fpgaModuleId,fpgaValue]
+	#return [fpgaModuleId,fpgaValue]
+	duplexPort.send(fpgaModuleId,fpgaValue)
 
 def triggerBass(msg,modifier):
 	fpgaModuleId = 23
 	fpgaValue = 0 #msg.velocity * 255
-	return [fpgaModuleId,fpgaValue]
+	#return [fpgaModuleId,fpgaValue]
+	duplexPort.send(fpgaModuleId,fpgaValue)
 
 def triggerBrush(msg,modifier):
 	fpgaModuleId = 24
 	fpgaValue = 0 #msg.velocity * 255
-	return [fpgaModuleId,fpgaValue]
+	#return [fpgaModuleId,fpgaValue]
+	duplexPort.send(fpgaModuleId,fpgaValue)
 
 def setVolume(msg,modifier):
 	global volume
 	fpgaModuleId = 40
 	fpgaValue = msg.value << 9
-	return [fpgaModuleId,fpgaValue/2]
+	#return [fpgaModuleId,fpgaValue/2]
+	duplexPort.send(fpgaModuleId,fpgaValue/2)
 
 def setBalance(msg,modifier):
 	global volume
 	fpgaModuleId = 41
 	fpgaValue = msg.value << 9
-	return [fpgaModuleId,fpgaValue/2]
+	#return [fpgaModuleId,fpgaValue/2]
+	duplexPort.send(fpgaModuleId,fpgaValue/2)
 
 def toggleExternalClock(msg,modifier):
 	if msg.type != "note_on":
@@ -64,7 +85,8 @@ def toggleExternalClock(msg,modifier):
 	global externalClock
 	externalClock = 0 if externalClock==1 else 1
 	fpgaModuleId = 31
-	return [fpgaModuleId,externalClock]
+	#return [fpgaModuleId,externalClock]
+	duplexPort.send(fpgaModuleId,externalClock)
 
 def togglePower(msg,modifier):
 	if msg.type != "note_on":
@@ -72,5 +94,6 @@ def togglePower(msg,modifier):
 	global power
 	power = 0 if power>0 else 65535
 	fpgaModuleId = 30
-	return [fpgaModuleId,power]
+	#return [fpgaModuleId,power]
+	duplexPort.send(fpgaModuleId,power)
 
