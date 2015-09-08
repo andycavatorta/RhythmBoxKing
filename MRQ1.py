@@ -63,14 +63,14 @@ def toggleExternalClock(msg,modifier):
 		return None
 	global externalClock
 	externalClock = 0 if externalClock==1 else 1
-	fpgaModuleId = 30
+	fpgaModuleId = 31
 	return [fpgaModuleId,externalClock]
 
 def togglePower(msg,modifier):
 	if msg.type != "note_on":
 		return None
 	global power
-	power = 0 if power==1 else 1
-	fpgaModuleId = 31
+	power = 0 if power>0 else 65535
+	fpgaModuleId = 30
 	return [fpgaModuleId,power]
 
