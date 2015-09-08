@@ -16,8 +16,9 @@ def setClockOscillator(msg,modifier):
 		clock1 = v << 6
 	if modifier == 2: # fine
 		clock2 = msg.value / 2
-	fpgaValue = clock0 + clock1 + clock2
-	print fpgaValue
+	fpgaValue = int((clock0 + clock1 + clock2)/2)
+	#print fpgaValue
+	fpgaValue = fpgaValue if fpgaValue > 0 else fpgaValue +1
 	return [fpgaModuleId,fpgaValue]
 
 def triggerSnare(msg,modifier):
@@ -49,13 +50,13 @@ def setVolume(msg,modifier):
 	global volume
 	fpgaModuleId = 40
 	fpgaValue = msg.value << 9
-	return [fpgaModuleId,fpgaValue]
+	return [fpgaModuleId,fpgaValue/2]
 
 def setBalance(msg,modifier):
 	global volume
 	fpgaModuleId = 41
 	fpgaValue = msg.value << 9
-	return [fpgaModuleId,fpgaValue]
+	return [fpgaModuleId,fpgaValue/2]
 
 def toggleExternalClock(msg,modifier):
 	if msg.type != "note_on":

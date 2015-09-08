@@ -4,7 +4,7 @@ import threading
 import mido
 import sys
 import MRQ1
-#import duplexPort
+import duplexPort
 
 # globals
 MIDI_PORT = False
@@ -39,16 +39,16 @@ MIDI_CC_mapping[73] = [MRQ1.setBalance,4]
 def TestCallback():
 	while True:
 		time.sleep(1)
-
-#duplexPort.init(testCallback)
-
+#duplexPort.init(testcallback)
 testcallback = threading.Thread(target=TestCallback)
 testcallback.start()
+
+duplexPort.init(testcallback)
 
 # init MIDI
 def mido_init():
 	midiInputs_l = mido.get_output_names()
-	#print midiInputs_l
+	print ">> MIDI Inputs", midiInputs_l
 	if len(midiInputs_l)  < 2:
 	    print "MIDI inputs not found.  Check USB connection."
 	    sys.exit(0)
@@ -68,12 +68,13 @@ def mapMIDI(msg):
 		if mapping_l:
 			fpgaParams = mapping_l[0](msg, mapping_l[1])
 			print "fpgaParams",fpgaParams
+			duplexPort.send(fpgaParams[0],fpgaParams[1])
 	if msg.type == "control_change":
 		mapping_l = MIDI_CC_mapping[msg.control]
 		if mapping_l:
 			fpgaParams = mapping_l[0](msg, mapping_l[1])
 			print "fpgaParams",fpgaParams
-	#duplexPort.send(fpgaParams[0],fpgaParams[1])
+			duplexPort.send(fpgaParams[0],fpgaParams[1])
 
 # signal functions
 mido_init()

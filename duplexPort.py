@@ -94,6 +94,7 @@ def send(module, value):
     value_bin_str = dec2bin(value, 16)
     word1_str = value_bin_str[11:16] + module_bin_str + "0"
     word2_str = value_bin_str[0:11] + "1"
+    print "duplexPort.py | send |", module, value
     for i in range(12):
         pin = PINS_OUT[i]
         val = int(word1_str[i])
@@ -101,9 +102,8 @@ def send(module, value):
         GPIO.output(pin,val)
 
     #time.sleep(.1)
-    p = read()
-    #print str(p)
-    time.sleep(.1)
+    #p = read()
+    #time.sleep(.1)
     for i in range(12):
         pin = PINS_OUT[i]
         val = int(word2_str[i])
