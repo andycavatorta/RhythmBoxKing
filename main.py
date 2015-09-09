@@ -9,21 +9,19 @@ import MRQ1
 # globals
 MIDI_PORT = False
 MIDI_note_mapping = [None] * 127
-#MIDI_note_mapping[97] = [MRQ1.setClockOscillator,[1,0]]
-#MIDI_note_mapping[98] = [MRQ1.setClockOscillator,[1,1]]
-#MIDI_note_mapping[99] = [MRQ1.setClockOscillator,[1,2]]
-#MIDI_note_mapping[93] = [MRQ1.setClockOscillator,[0,0]]
-#MIDI_note_mapping[94] = [MRQ1.setClockOscillator,[0,1]]
-#MIDI_note_mapping[95] = [MRQ1.setClockOscillator,[0,2]]
+
+MIDI_note_mapping[91] = [MRQ1.droneSnare,16]
+MIDI_note_mapping[93] = [MRQ1.droneBongo,16]
+MIDI_note_mapping[95] = [MRQ1.droneBass, 16]
+MIDI_note_mapping[96] = [MRQ1.droneBrush,16]
+MIDI_note_mapping[98] = [MRQ1.droneBlock,16]
+
 MIDI_note_mapping[100] = [MRQ1.triggerSnare,None]
 MIDI_note_mapping[101] = [MRQ1.triggerBongo,None]
 MIDI_note_mapping[105] = [MRQ1.triggerBlock,None]
 MIDI_note_mapping[107] = [MRQ1.triggerBass ,None]
 MIDI_note_mapping[103] = [MRQ1.triggerBrush,None]
-#MIDI_note_mapping[96] = [MRQ1.setVolume, 1]
-#MIDI_note_mapping[92] = [MRQ1.setVolume, 0]
-#MIDI_note_mapping[67] = [MRQ1.setBalance,1]
-#MIDI_note_mapping[63] = [MRQ1.setBalance,0]
+
 MIDI_note_mapping[119] = [MRQ1.toggleExternalClock,None]
 MIDI_note_mapping[120] = [MRQ1.togglePower,None]
 MIDI_CC_mapping = [None] * 127

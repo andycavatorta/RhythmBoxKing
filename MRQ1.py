@@ -94,6 +94,56 @@ def setVolume(msg,modifier):
 	#return [fpgaModuleId,fpgaValue/2]
 	duplexPort.send(fpgaModuleId,fpgaValue/2)
 
+def droneSnare(msf, modifier):
+	fpgaModuleId = 11
+	if msg.type != "note_on":
+		global clock0, clock1, clock2
+		clock = int(clock0 + clock1 + clock2/2)
+		duplexPort.send(fpgaModuleId,clock)	
+	if msg.type != "note_off":
+		clock = 0
+		duplexPort.send(fpgaModuleId,clock)	
+
+def droneBongo(msf, modifier):
+	fpgaModuleId = 12
+	if msg.type != "note_on":
+		global clock0, clock1, clock2
+		clock = int(clock0 + clock1 + clock2/2)
+		duplexPort.send(fpgaModuleId,clock)	
+	if msg.type != "note_off":
+		clock = 0
+		duplexPort.send(fpgaModuleId,clock)	
+
+def droneBass(msf, modifier):
+	fpgaModuleId = 14
+	if msg.type != "note_on":
+		global clock0, clock1, clock2
+		clock = int(clock0 + clock1 + clock2/2)
+		duplexPort.send(fpgaModuleId,clock)	
+	if msg.type != "note_off":
+		clock = 0
+		duplexPort.send(fpgaModuleId,clock)	
+
+def droneBrush(msf, modifier):
+	fpgaModuleId = 15
+	if msg.type != "note_on":
+		global clock0, clock1, clock2
+		clock = int(clock0 + clock1 + clock2/2)
+		duplexPort.send(fpgaModuleId,clock)	
+	if msg.type != "note_off":
+		clock = 0
+		duplexPort.send(fpgaModuleId,clock)	
+
+def droneBlock(msf, modifier):
+	fpgaModuleId = 13
+	if msg.type != "note_on":
+		global clock0, clock1, clock2
+		clock = int(clock0 + clock1 + clock2/2)
+		duplexPort.send(fpgaModuleId,clock)	
+	if msg.type != "note_off":
+		clock = 0
+		duplexPort.send(fpgaModuleId,clock)	
+
 def setBalance(msg,modifier):
 	global volume
 	fpgaModuleId = 41
