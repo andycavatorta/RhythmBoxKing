@@ -24,6 +24,7 @@ bongo = 65535
 block = 65535
 bass = 65535
 brush = 65535
+brushOff = 65535
 
 def setClockOscillator(msg,modifier):
 	global clock0, clock1, clock2
@@ -79,7 +80,10 @@ def triggerBass(msg,modifier):
 	duplexPort.send(fpgaModuleId,bass)
 
 def triggerBrush(msg,modifier):
-	fpgaModuleId = 24
+	if msg.type != "note_on":
+		fpgaModuleId = 24
+	else:
+		fpgaModuleId = 25
 	global brush
 	brush = 0 if brush > 0 else 65535
 	duplexPort.send(fpgaModuleId,brush)
