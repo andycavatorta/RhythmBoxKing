@@ -76,6 +76,11 @@ def mapMIDI(msg):
 			#fpgaParams = mapping_l[0](msg, mapping_l[1])
 			#print "fpgaParams",fpgaParams
 			#duplexPort.send(fpgaParams[0],fpgaParams[1])
-
+	if msg.type == "note_off" and msg.note == 103:
+		print "asdf"
+		mapping_l = MIDI_note_mapping[msg.note]
+		print mapping_l
+		if mapping_l:	
+			mapping_l[0](msg, mapping_l[1])
 # signal functions
 mido_init()

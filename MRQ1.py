@@ -80,16 +80,23 @@ def triggerBass(msg,modifier):
 	duplexPort.send(fpgaModuleId,bass)
 
 def triggerBrush(msg,modifier):
-	if msg.type != "note_on":
+	global brush
+	if msg.type == "note_on":
+		fpgaModuleId = 25
+		duplexPort.send(fpgaModuleId,65535)
+
 		fpgaModuleId = 24
+		#brush = 0 if brush > 0 else 65535
+		#brush = 65535
+		duplexPort.send(fpgaModuleId,0)
+		time.sleep(0.001)
+		#brush = 0 if brush > 0 else 65535
+		brush = 0
+		duplexPort.send(fpgaModuleId,65535)
 	else:
 		fpgaModuleId = 25
-	global brush
-	brush = 0 if brush > 0 else 65535
-	duplexPort.send(fpgaModuleId,brush)
-	time.sleep(0.001)
-	brush = 0 if brush > 0 else 65535
-	duplexPort.send(fpgaModuleId,brush)
+		#brush = 0 if brush > 0 else 65535
+		duplexPort.send(fpgaModuleId,0)
 
 def setVolume(msg,modifier):
 	global volume
@@ -98,17 +105,17 @@ def setVolume(msg,modifier):
 	#return [fpgaModuleId,fpgaValue/2]
 	duplexPort.send(fpgaModuleId,fpgaValue/2)
 
-def droneSnare(msf, modifier):
+def droneSnare(msg, modifier):
 	fpgaModuleId = 11
-	if msg.type != "note_on":
+	if msg.type == "note_on":
 		global clock0, clock1, clock2
 		clock = int(clock0 + clock1 + clock2/2)
 		duplexPort.send(fpgaModuleId,clock)	
-	if msg.type != "note_off":
+	if msg.type == "note_off":
 		clock = 0
 		duplexPort.send(fpgaModuleId,clock)	
 
-def droneBongo(msf, modifier):
+def droneBongo(msg, modifier):
 	fpgaModuleId = 12
 	if msg.type != "note_on":
 		global clock0, clock1, clock2
@@ -118,7 +125,7 @@ def droneBongo(msf, modifier):
 		clock = 0
 		duplexPort.send(fpgaModuleId,clock)	
 
-def droneBass(msf, modifier):
+def droneBass(msg, modifier):
 	fpgaModuleId = 14
 	if msg.type != "note_on":
 		global clock0, clock1, clock2
@@ -128,7 +135,7 @@ def droneBass(msf, modifier):
 		clock = 0
 		duplexPort.send(fpgaModuleId,clock)	
 
-def droneBrush(msf, modifier):
+def droneBrush(msg, modifier):
 	fpgaModuleId = 15
 	if msg.type != "note_on":
 		global clock0, clock1, clock2
@@ -138,7 +145,7 @@ def droneBrush(msf, modifier):
 		clock = 0
 		duplexPort.send(fpgaModuleId,clock)	
 
-def droneBlock(msf, modifier):
+def droneBlock(msg, modifier):
 	fpgaModuleId = 13
 	if msg.type != "note_on":
 		global clock0, clock1, clock2
